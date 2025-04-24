@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Select Exam Type - SeatEase</title>
+  <link rel="stylesheet" href="exam-type.css" />
+</head>
+<body>
+  <main>
+    <div class="form-container">
+      <h2>Select Exam Type</h2>
+      <form id="examForm">
+        <label for="examType">Choose the type of exam:</label>
+        <select id="examType" required>
+          <option value="" disabled selected>Select exam type</option>
+          <option value="T1">T1</option>
+          <option value="T4">T4</option>
+          <option value="T5">T5</option>
+          <option value="Lab Internals">Lab Internals</option>
+          <option value="Lab Externals">Lab Externals</option>
+          <option value="Semester Exam">Semester Exam</option>
+        </select>
+        <button type="submit">Proceed</button>
+      </form>
+    </div>
+  </main>
+  <script>
+    document.getElementById('examForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const examType = document.getElementById('examType').value;
+      if (examType) {
+        localStorage.setItem('selectedExamType', examType);
+        window.location.href = "rooms.html";
+      }
+    });
+  </script>
+</body>
+</html>

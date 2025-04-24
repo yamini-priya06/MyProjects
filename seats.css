@@ -1,0 +1,135 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f5f7fb;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 20px;
+}
+
+h2 {
+  text-align: center;
+  font-size: 2rem;
+  color: #0a3d91;
+  margin-bottom: 30px;
+}
+
+#seatGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 20px;
+  max-width: 700px;
+  width: 100%;
+  margin: auto;
+}
+
+.seat {
+  background-color: #dfeeff;
+  border-radius: 16px;
+  padding: 25px 0;
+  text-align: center;
+  font-weight: bold;
+  color: #004aad;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease, background-color 0.3s;
+}
+
+.seat:hover {
+  transform: translateY(-3px);
+  background-color: #cce4ff;
+}
+
+.reserved {
+  background-color: #cccccc;
+  color: #777;
+  cursor: not-allowed;
+}
+
+.highlight {
+  border: 3px solid #1e90ff;
+  box-shadow: 0 0 10px #1e90ff;
+}
+
+/* Modal Styling */
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  height: 100vh; width: 100vw;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.modal-content button {
+  margin: 10px;
+  padding: 10px 20px;
+  border: none;
+  background-color: #004aad;
+  color: white;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.modal-content button:hover {
+  background-color: #003580;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Exam Cell Form */
+#examAssignContainer {
+  background-color: #f0f6ff;
+  padding: 20px;
+  border-radius: 16px;
+  margin-bottom: 30px;
+  max-width: 700px;
+  width: 100%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+#examAssignContainer label {
+  display: block;
+  margin-top: 10px;
+  color: #0a3d91;
+  font-weight: bold;
+}
+
+#examAssignContainer input,
+#examAssignContainer select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+#examAssignContainer button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #004aad;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+#examAssignContainer button:hover {
+  background-color: #003580;
+}

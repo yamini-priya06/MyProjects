@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Seat Assignment</title>
+  <link rel="stylesheet" href="assign-seats.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="info-box">
+      <p><strong>Room:</strong> <span id="roomNumber"></span></p>
+      <p><strong>Exam Type:</strong> <span id="examType"></span></p>
+      <p><strong>Section 1:</strong> <span id="section1Info"></span></p>
+      <p><strong>Section 2:</strong> <span id="section2Info"></span></p>
+    </div>
+    <button id="assignBtn">Assign Seats Automatically</button>
+    <div id="seatGrid" class="seat-grid hidden"></div>
+  </div>
+  <script>
+    const roomNumber = localStorage.getItem("selectedRoom") || "101";
+    const examType = localStorage.getItem("examType") || "T5";
+    const section1 = JSON.parse(localStorage.getItem("section1"));
+    const section2 = JSON.parse(localStorage.getItem("section2"));
+    document.getElementById("roomNumber").textContent = roomNumber;
+    document.getElementById("examType").textContent = examType;
+    document.getElementById("section1Info").textContent = `${section1.year} - ${section1.section}`;
+    document.getElementById("section2Info").textContent = `${section2.year} - ${section2.section}`;
+    const seatGrid = document.getElementById("seatGrid");
+    const assignBtn = document.getElementById("assignBtn");
+    assignBtn.addEventListener("click", () => {
+      seatGrid.classList.remove("hidden");
+      seatGrid.innerHTML = "";
+      const rows = 5;
+      const cols = 6;
+      let rollNum1 = 101; // Section 1 starts from 101
+      let rollNum2 = 201; // Section 2 starts from 201
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const seat = document.createElement("div");
+          seat.classList.add("seat");
+          if ((c + 1) % 2 === 1) {
+            seat.classList.add("section1");
+            seat.textContent = `${rollNum1++}`;
+            seat.title = `${section1.year}-${section1.section}`;
+          } else {
+            seat.classList.add("section2");
+            seat.textContent = `${rollNum2++}`;
+            seat.title = `${section2.year}-${section2.section}`;
+          }
+          seatGrid.appendChild(seat);
+        }
+      }
+    });
+  </script>
+</body>
+</html>

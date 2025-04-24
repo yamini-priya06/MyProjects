@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Login</title>
+  <link rel="stylesheet" href="student.css" />
+</head>
+<body>
+  <main>
+    <div class="login-container">
+      <h2>Student Login</h2>
+      <form id="studentLoginForm">
+        <div class="form-group">
+          <label for="student-id">Student ID:</label>
+          <input type="text" id="student-id" placeholder="Enter Student ID" required />
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" id="password" placeholder="Enter Password" required />
+        </div>
+        <button type="submit">Proceed</button>
+      </form>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById("studentLoginForm").addEventListener("submit", function (e) {
+      e.preventDefault(); // Prevent form from submitting normally
+
+      const studentId = document.getElementById("student-id").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (studentId === "" || password === "") {
+        alert("Please enter both Student ID and Password.");
+        return;
+      }
+
+      // Set userType in localStorage and redirect
+      localStorage.setItem("userType", "student");
+      localStorage.setItem("studentId", studentId); // Optional: store student ID
+      window.location.href = "rooms.html";
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Exam Cell - SeatEase</title>
+  <link rel="stylesheet" href="examcell.css" />
+</head>
+<body>
+  <main>
+    <div class="login-container">
+      <h2>Exam Cell Login</h2>
+      <form id="exam-form">
+        <div class="form-group">
+          <label for="exam-id">Exam Cell ID:</label>
+          <input type="text" id="exam-id" placeholder="Enter Exam Cell ID" />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" id="password" placeholder="Enter Password" />
+        </div>
+
+        <button type="button" id="proceed-btn">Proceed</button>
+      </form>
+    </div>
+  </main>
+
+  <!-- Confirmation Modal -->
+  <div id="confirmationModal" class="modal">
+    <div class="modal-content">
+      <p>Proceed to Exam Type Selection?</p>
+      <div class="modal-buttons">
+        <button id="confirm-btn">Confirm</button>
+        <button id="cancel-btn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const proceedBtn = document.getElementById("proceed-btn");
+    const modal = document.getElementById("confirmationModal");
+    const confirmBtn = document.getElementById("confirm-btn");
+    const cancelBtn = document.getElementById("cancel-btn");
+
+    proceedBtn.addEventListener("click", function () {
+      const examId = document.getElementById("exam-id").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (examId === "" || password === "") {
+        showModal("Please fill in both Exam Cell ID and Password before proceeding.", false);
+      } else {
+        modal.style.display = "flex";
+      }
+    });
+
+    confirmBtn.addEventListener("click", function () {
+      const examId = document.getElementById("exam-id").value.trim();
+      localStorage.setItem("userType", "examCell");
+      localStorage.setItem("examID", examId);
+      modal.style.display = "none";
+      window.location.href = "exam-type.html";
+    });
+
+    cancelBtn.addEventListener("click", function () {
+      modal.style.display = "none";
+    });
+
+    function showModal(message, showConfirm = false) {
+      const modalText = document.querySelector(".modal-content p");
+      modalText.textContent = message;
+      confirmBtn.style.display = showConfirm ? "inline-block" : "none";
+      modal.style.display = "flex";
+    }
+  </script>
+</body>
+</html>

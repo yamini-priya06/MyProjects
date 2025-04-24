@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Select Sections - SeatEase</title>
+  <link rel="stylesheet" href="section.css">
+</head>
+<body>
+  <main>
+    <div class="selection-container">
+      <h2>Select Year and Section</h2>
+      <form id="sectionForm">
+        <p>Select exactly <strong>2 combinations</strong> of Year and Section (e.g., 2nd Year A & 3rd Year C)</p>
+
+        <div class="combo">
+          <label>First Combination:</label>
+          <select id="year1" required>
+            <option value="" disabled selected>Select Year</option>
+            <option value="1st">1st Year</option>
+            <option value="2nd">2nd Year</option>
+            <option value="3rd">3rd Year</option>
+            <option value="4th">4th Year</option>
+          </select>
+          <select id="section1" required>
+            <option value="" disabled selected>Select Section</option>
+            <option value="A">Section A</option>
+            <option value="B">Section B</option>
+            <option value="C">Section C</option>
+            <option value="D">Section D</option>
+            <option value="E">Section E</option>
+            <option value="F">Section F</option>
+            <option value="G">Section G</option>
+          </select>
+        </div>
+
+        <div class="combo">
+          <label>Second Combination:</label>
+          <select id="year2" required>
+            <option value="" disabled selected>Select Year</option>
+            <option value="1st">1st Year</option>
+            <option value="2nd">2nd Year</option>
+            <option value="3rd">3rd Year</option>
+            <option value="4th">4th Year</option>
+          </select>
+          <select id="section2" required>
+            <option value="" disabled selected>Select Section</option>
+            <option value="A">Section A</option>
+            <option value="B">Section B</option>
+            <option value="C">Section C</option>
+            <option value="D">Section D</option>
+            <option value="E">Section E</option>
+            <option value="F">Section F</option>
+            <option value="G">Section G</option>
+          </select>
+        </div>
+
+        <button type="submit">Proceed to Assign Seats</button>
+      </form>
+    </div>
+  </main>
+
+  
+
+  <script>
+    document.getElementById('sectionForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const year1 = document.getElementById('year1').value;
+      const section1 = document.getElementById('section1').value;
+      const year2 = document.getElementById('year2').value;
+      const section2 = document.getElementById('section2').value;
+
+      if (year1 === year2 && section1 === section2) {
+        alert("Please select two different combinations of Year and Section.");
+        return;
+      }
+
+      localStorage.setItem("section1", JSON.stringify({ year: year1, section: section1 }));
+      localStorage.setItem("section2", JSON.stringify({ year: year2, section: section2 }));
+      window.location.href = "assign-seats.html"; // The next step
+    });
+  </script>
+</body>
+</html>

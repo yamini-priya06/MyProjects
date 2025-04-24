@@ -1,0 +1,117 @@
+/* Base styles */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: white /* light pink background */
+}
+
+/* Register Box Styling */
+.register-bg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 20px;
+}
+
+.register-box {
+    background-color: white; /* soft pink card */
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* Avatar icon */
+.avatar-circle {
+    background-color: #1e3a8a;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+/* Headings and sub-text */
+h2 {
+    margin: 0 0 10px;
+    color: #000;
+}
+
+.sub-text {
+    font-size: 14px;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+/* Input group */
+.input-group {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 12px 0;
+}
+
+.input-group i {
+    margin-right: 10px;
+    color: #888;
+}
+
+.input-group input {
+    border: none;
+    background: transparent;
+    outline: none;
+    width: 100%;
+    font-size: 16px;
+    color: #333;
+}
+
+/* Submit button */
+button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #1e3a8a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #2b53b0;
+}
+
+/* Extra links */
+.extra-links {
+    margin-top: 20px;
+    font-size: 13px;
+}
+
+.extra-links a {
+    color: #1e3a8a;
+    text-decoration: none;
+}
+
+.extra-links a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .register-box {
+        width: 90%;
+        margin: 20px;
+    }
+}

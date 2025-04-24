@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Seat Selection</title>
+  <link rel="stylesheet" href="seats.css" />
+</head>
+<body>
+
+  <main>
+    <h2>Select Your Seat</h2>
+    <div id="examAssignContainer" class="hidden">
+      <label for="examType">Exam Type:</label>
+      <select id="examType">
+        <option value="midterm">Midterm</option>
+        <option value="final">Final</option>
+      </select>
+
+      <label for="section1">Section 1 (e.g. 2A):</label>
+      <input type="text" id="section1" placeholder="2A" />
+
+      <label for="section2">Section 2 (e.g. 3B):</label>
+      <input type="text" id="section2" placeholder="3B" />
+
+      <button onclick="assignExamSeats()">Assign Seats</button>
+    </div>
+
+    <div id="seatGrid"></div>
+  </main>
+
+  <!-- Modal -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <p id="modalText"></p>
+      <button onclick="confirmReservation()">Confirm</button>
+      <button onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+
+  <script>
+    const seatGrid = document.getElementById("seatGrid");
+    const modal = document.getElementById("modal");
+    const modalText = document.getElementById("modalText");
+    let selectedSeat = null;
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const room = urlParams.get("room");
+    const regNo = localStorage.getItem("regNo");
+    const userType = localStorage.getItem("userType");
+
+    if (!room) {
+      alert("No room selected. Redirecting...");
+      window.location.href = "rooms.html";
+    }
+
+    if (userType === "examcell") {
+      document.getElementById("examAssignContainer").classList.remove("hidden");
+    }
+
+    let seatNumber = 1;
+    for (let row = 1; row <= 5; row++) {
+      for (let col = 1; col <= 6; col++) {
+        const seat = document.createElement("div");
+        const seatId = seatNumber.toString();
+        seat.className = "seat";
+        seat.textContent = seatId;
+        seat.id = seatId;
+
+        const saved = localStorage.getItem(`${room}-${seatId}`);
+        if (saved) {
+          seat.classList.add("reserved");
+          if (saved === regNo) seat.classList.add("highlight");
+          seat.title = "Reserved by " + saved;
+        }
+
+        seat.addEventListener("click", () => {
+          if (userType === "student" && !seat.classList.contains("reserved")) {
+            selectedSeat = seatId;
+            modalText.innerText = `Do you want to reserve seat ${seatId}?`;
+            modal.classList.remove("hidden");
+          }
+        });
+
+        seatGrid.appendChild(seat);
+        seatNumber++;
+      }
+    }
+
+    function confirmReservation() {
+      if (selectedSeat) {
+        localStorage.setItem(`${room}-${selectedSeat}`, regNo);
+        document.getElementById(selectedSeat).classList.add("reserved", "highlight");
+        document.getElementById(selectedSeat).title = "Reserved by " + regNo;
+      }
+      modal.classList.add("hidden");
+    }
+
+    function closeModal() {
+      modal.classList.add("hidden");
+      selectedSeat = null;
+    }
+
+    function assignExamSeats() {
+      const section1 = document.getElementById("section1").value.trim().toUpperCase();
+      const section2 = document.getElementById("section2").value.trim().toUpperCase();
+
+      if (!section1 || !section2) {
+        alert("Please enter both sections.");
+        return;
+      }
+
+      const students1 = getStudentsForSection(section1);
+      const students2 = getStudentsForSection(section2);
+      const seats = Array.from(document.getElementsByClassName("seat"));
+
+      let seatIdx = 0;
+      for (let i = 0; i < Math.max(students1.length, students2.length); i++) {
+        if (i < students1.length && seatIdx < seats.length) {
+          const seat = seats[seatIdx++];
+          assign(seat, students1[i]);
+        }
+        if (i < students2.length && seatIdx < seats.length) {
+          const seat = seats[seatIdx++];
+          assign(seat, students2[i]);
+        }
+      }
+
+      alert("Seats assigned!");
+    }
+
+    function getStudentsForSection(section) {
+      const allKeys = Object.keys(localStorage);
+      const students = [];
+      for (const key of allKeys) {
+        if (key.startsWith("user-")) {
+          const data = JSON.parse(localStorage.getItem(key));
+          if (data.section === section) {
+            students.push(data.regNo);
+          }
+        }
+      }
+      students.sort(); // by regNo
+      return students;
+    }
+
+    function assign(seat, regNo) {
+      const seatId = seat.id;
+      seat.classList.remove("reserved", "highlight");
+      seat.classList.add("reserved");
+      seat.title = "Reserved by " + regNo;
+      localStorage.setItem(`${room}-${seatId}`, regNo);
+    }
+  </script>
+</body>
+</html>
